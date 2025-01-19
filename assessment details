@@ -1,0 +1,75 @@
+This “assessment dataset” contains sales information that can be analyzed and used to perform various operations. Here I’m considering the table name is : “salesdata”
+
+-> We have different columns in this sales data set . “Transaction ID” which is unique for each transaction and “customer IDs" which is  not unique since a customer can make multiple transactions.
+ Here, the primary key should be a single column, “transaction ID” is the primary key, and “customer ID” is a foreign key.
+
+-> The "Transaction date" column is masked; it is a hidden data column. The column's data appears to be replaced with a “########”
+
+SQL query is : UPDATE Salesdata SET Transactiondate = '########';
+
+-> Transaction amount :
+Through this column we can analyze the amount of each transaction according to the city and region etc..
+
+1) We can perform sum of total sales amount like below : 
+SELECT SUM(TransactionAmount) AS TotalSales FROM salesdata ;
+2)  We can get the top 5 transaction amounts :  
+SELECT * FROM salesdata ORDERBY TransactionAmount DESC LIMIT 5;
+
+-> Payment method : 
+
+This column allows payment via UPI, cash, or credit/debit card.
+SELECT * FROM salesdata WHERE PaymentMethod IN ('Cash', 'Debit Card', 'Credit Card',’UPI’);
+
+-> Quantity and discount percentage columns: 
+
+1) Retrieve All Transactions with Quantity and Discount Percentage:
+SELECT TransactionID, Quantity, DiscountPercentage FROM SalesData;
+2)we can  Find Transactions with High Quantity Purchases (e.g., Quantity > 10)
+SELECT TransactionID, Quantity, DiscountPercentage FROM SalesData WHERE Quantity > 10;
+3) Average Discount Percentage for Each Quantity:
+SELECT Quantity, AVG(DiscountPercentage) AS AverageDiscount FROM SalesData GROUP BY Quantity;
+
+These queries allow us to analyze the relationship between quantity and discount percentage in various ways.
+
+-> city, store type, customer age and customer gender columns
+
+1) we can find Transactions in a Specific City (e.g., 'Mumbai'):
+SELECT TransactionID, City, Storetype, customerAge, customergender FROM salesdata WHERE City = 'Mumbai';
+2) Count the Number of Transactions by Store Type:
+
+SELECT StoreType, COUNT(*) AS Transactioncount FROM salesdata GROUP BY storetype;
+
+-> ProductName, Region, and Returned columns:
+
+1) Retrieve All Transactions for a Specific Product:
+SELECT * FROM Transactions WHERE ProductName = 'T-Shirt';
+
+2) Count the Number of Transactions in Each Region:
+
+SELECT Region, COUNT(*) AS TransactionCount FROM Transactions GROUP BY Region;
+
+3)select all returned products
+
+SELECT * FROM Transactions WHERE Returned = 'Yes';
+
+
+
+-> feedback and shipping cost and delivery time days columns
+
+1) Retrieve Transactions with High Feedback Scores:
+
+SELECT * FROM Transactions
+WHERE Feedback >= 4;
+
+2) Calculate the Average Shipping Cost:
+
+SELECT AVG(ShippingCost) AS AverageShippingCost FROM Transactions;
+
+3) Find Transactions with the Longest Delivery Times:
+
+SELECT * FROM Transactions ORDER BY deliverytimeDays DESC LIMIT 10;
+
+These queries will help us to analyze feedback, shipping costs, and delivery times to better understand customer satisfaction, cost efficiency, and delivery performance
+
+
+
